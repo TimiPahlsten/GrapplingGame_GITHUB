@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class RayCastGun : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class RayCastGun : MonoBehaviour
 
     public bool readytofire;
     public bool aiming;
+    public bool isReloading;
     //public Transform BulletSpawnPoint;
 
     //public TrailRenderer BulletTrail;
@@ -31,14 +33,28 @@ public class RayCastGun : MonoBehaviour
     [SerializeField]
     private float BulletSpeed = 100;
 
+    // AMMO
+    public int maxAmmo = 1;
+    private int currentAmmo = -1;
+
+    public int maxHeldAmmo;
+    public int currentMaxHeldAmmo;
+
+    public TMP_Text ammoText;
+
     void Start()
     {
         readytofire = true;
+
+        if (currentAmmo == -1)
+            currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
     void Update()
     {
+        ammoText.text = currentMaxHeldAmmo.ToString() + "/" + maxHeldAmmo;
+
         //Prepare gun
         if(Input.GetButton("Fire2"))
         {
@@ -56,7 +72,7 @@ public class RayCastGun : MonoBehaviour
         }
         
 
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && readytofire && aiming)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && readytofire && aiming && currentMaxHeldAmmo >= 1)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             shoot();
@@ -77,12 +93,15 @@ public class RayCastGun : MonoBehaviour
         muzzleFlash.Play();
         anim.Play("Recoil");
 
+        currentAmmo--;
 
         RaycastHit hit;
 
         source.Play();
 
         readytofire = false;
+
+        currentMaxHeldAmmo -= 1;
 
        
 
@@ -145,13 +164,20 @@ public class RayCastGun : MonoBehaviour
 
     void Reload()
     {
-        anim.Play("Reload");
+        isReloading = true;
+        Debug.Log("RELOADING!!!");
+        //anim.Play("Reload");
+        anim.SetBool("Reloading", true);
+
     }
 
     void ResetGun()
     {
+        isReloading = false;
         Debug.Log("Reseted");
         readytofire = true;
+        currentAmmo = maxAmmo;
+        anim.SetBool("Reloading", false);
     }
 
     void CameraRecoil()
