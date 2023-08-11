@@ -22,6 +22,7 @@ public class PickUpAmmo : MonoBehaviour
         if (other.gameObject.CompareTag("Ammo"))
         {
             gunScript.currentMaxHeldAmmo += amountOfAmmo;
+            Destroy(other.gameObject);
         }
 
     }

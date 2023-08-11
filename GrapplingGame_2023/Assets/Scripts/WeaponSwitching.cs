@@ -11,7 +11,7 @@ public class WeaponSwitching : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SelectWeapon();
+        //SelectWeapon();
         gunScript = gunScript.gameObject.GetComponent<RayCastGun>();
     }
 
