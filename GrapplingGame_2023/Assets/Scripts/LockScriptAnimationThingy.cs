@@ -17,7 +17,7 @@ public class LockScriptAnimationThingy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(lockItem.activeInHierarchy)
+        if(!lockItem.activeInHierarchy)
         {
             anim.Play("GateOpen");
         }

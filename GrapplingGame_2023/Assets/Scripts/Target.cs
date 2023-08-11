@@ -9,13 +9,23 @@ public class Target : MonoBehaviour
 
     public float health = 50f;
     public GameObject destroyEffect;
+    public bool destroy;
+    public bool deactivate;
 
     public void TakeDamage(float amount)
     {
         health -= amount;
         if (health <= 0f)
         {
-            StartCoroutine("Die");
+            if(destroy)
+            {
+                StartCoroutine("Die");
+            }
+            if(deactivate)
+            {
+                this.gameObject.SetActive(false);
+            }
+
         }
     }
 

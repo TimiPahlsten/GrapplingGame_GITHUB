@@ -5,7 +5,7 @@ using UnityEngine;
 public class RbRotateGun : MonoBehaviour
 {
 
-    public RbGrapplingGun grappling;
+    public GrapplingGun grappling;
 
 
     private Quaternion desiredRotation;
@@ -13,7 +13,7 @@ public class RbRotateGun : MonoBehaviour
 
     void Update()
     {
-        if (!grappling.IsGrappling())
+        if (!grappling.isGrappling())
         {
             desiredRotation = transform.parent.rotation;
         }
