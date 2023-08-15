@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponSwitching : MonoBehaviour
 {
-    public RayCastGun gunScript;
+    public NewGunScript gunScript;
 
     public int selectedWeapon = 0;
 
@@ -12,15 +12,37 @@ public class WeaponSwitching : MonoBehaviour
     void Start()
     {
         //SelectWeapon();
-        gunScript = gunScript.gameObject.GetComponent<RayCastGun>();
+        gunScript = gunScript.gameObject.GetComponent<NewGunScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(gunScript.readytofire)
+        {
+            ChooseWeapon();
+        }
+    }
+
+    void SelectWeapon()
+    {
+        int i = 0;
+        foreach (Transform weapon in transform)
+        {
+            if (i == selectedWeapon )
+                weapon.gameObject.SetActive(true);
+            else
+                weapon.gameObject.SetActive(false);
+            i++;
+        }
+    }
+ 
+       
+    void ChooseWeapon()
+    {
         int previousSelectedWeapon = selectedWeapon;
 
-        if(Input.GetAxis("Mouse ScrollWheel") > 0f)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
             if (selectedWeapon >= transform.childCount - 1)
                 selectedWeapon = 0;
@@ -49,19 +71,4 @@ public class WeaponSwitching : MonoBehaviour
             SelectWeapon();
         }
     }
-
-    void SelectWeapon()
-    {
-        int i = 0;
-        foreach (Transform weapon in transform)
-        {
-            if (i == selectedWeapon )
-                weapon.gameObject.SetActive(true);
-            else
-                weapon.gameObject.SetActive(false);
-            i++;
-        }
-    }
- 
-       
 }

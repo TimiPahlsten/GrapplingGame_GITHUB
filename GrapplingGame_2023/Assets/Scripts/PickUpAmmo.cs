@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickUpAmmo : MonoBehaviour
 {
 
-    public RayCastGun gunScript;
+    public NewGunScript gunScript;
     public GameObject gun;
 
     public int amountOfAmmo;
@@ -13,7 +13,7 @@ public class PickUpAmmo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gunScript = gun.GetComponent<RayCastGun>();
+        gunScript = gun.GetComponent<NewGunScript>();
     }
 
 
@@ -21,7 +21,7 @@ public class PickUpAmmo : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ammo"))
         {
-            gunScript.currentMaxHeldAmmo += amountOfAmmo;
+            gunScript.maxAmmo += amountOfAmmo;
             Destroy(other.gameObject);
         }
 
